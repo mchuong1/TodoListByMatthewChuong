@@ -6,6 +6,9 @@ import {
   Center,
   Button,
   ButtonText,
+  ButtonIcon,
+  TrashIcon,
+  VStack,
 } from '@gluestack-ui/themed';
 // import {RealmProvider} from './realm/realmProvider';
 import {createRealmContext} from '@realm/react';
@@ -40,9 +43,11 @@ export default function App() {
     <RealmProvider>
       <GluestackUIProvider config={config.theme}>
         <Center h={'100%'}>
-          <Text>Hello World!</Text>
-          <CreateTodo />
-          <TodoList />
+          <VStack space="lg">
+            <Text>Hello World!</Text>
+            <CreateTodo />
+            <TodoList />
+          </VStack>
         </Center>
       </GluestackUIProvider>
     </RealmProvider>
@@ -50,14 +55,25 @@ export default function App() {
 }
 
 const TodoList = () => {
-  // const [allTodos, setAllTodos] = useState<Realm.Results<Todo>>();
+  const realm = useRealm();
   const todos = useQuery(Todo);
-
+  const deleteTodo = (todo: Todo) => {
+    realm.write(() => {
+      realm.delete(todo);
+    });
+  };
   return (
     <Center>
-      {todos.map(t => (
-        <Text>{t.description}</Text>
-      ))}
+      <VStack space="xl">
+        {todos.map((t, i) => (
+          <Text key={i}>
+            {`${t.description} `}
+            <Button size="xs" onPress={() => deleteTodo(t)}>
+              <ButtonIcon as={TrashIcon} />
+            </Button>
+          </Text>
+        ))}
+      </VStack>
     </Center>
   );
 };
