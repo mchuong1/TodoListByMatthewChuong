@@ -7,12 +7,12 @@ class Todo extends Realm.Object<Todo> {
 
   static schema: ObjectSchema = {
     name: 'Todo',
-    properties: {
-      _id: 'int',
-      description: {type: 'string'},
-      done: 'boolean',
-    },
     primaryKey: '_id',
+    properties: {
+      _id: 'objectId',
+      description: {type: 'string'},
+      done: 'bool',
+    },
   };
 }
 
