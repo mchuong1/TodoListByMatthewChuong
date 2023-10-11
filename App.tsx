@@ -2,7 +2,6 @@ import React from 'react';
 import {
   config,
   GluestackUIProvider,
-  Text,
   Center,
   VStack,
 } from '@gluestack-ui/themed';
@@ -16,7 +15,6 @@ export default function App() {
       <GluestackUIProvider config={config.theme}>
         <Center h={'100%'}>
           <VStack space="lg">
-            <Text>Hello World!</Text>
             <CreateTodo />
             <TodoList />
           </VStack>
