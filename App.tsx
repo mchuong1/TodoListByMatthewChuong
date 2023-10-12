@@ -7,7 +7,7 @@ import {
 } from '@gluestack-ui/themed';
 import {RealmProvider} from './realm/realmProvider';
 import TodoList from './components/TodoList';
-import CreateTodo from './components/CreateTodo';
+import CreateTodoForm from './pages/CreateTodoForm';
 
 export default function App() {
   return (
@@ -15,7 +15,7 @@ export default function App() {
       <GluestackUIProvider config={config.theme}>
         <Center h={'100%'}>
           <VStack space="lg">
-            <CreateTodo />
+            <CreateTodoForm />
             <TodoList />
           </VStack>
         </Center>
