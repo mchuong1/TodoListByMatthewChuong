@@ -30,6 +30,7 @@ const CreateTodoForm = () => {
         done: false,
       });
     });
+    setShowForm(false);
   };
 
   return (
