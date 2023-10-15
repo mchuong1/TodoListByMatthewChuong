@@ -10,26 +10,31 @@ import {
   Input,
   InputField,
   VStack,
+  Text,
+  Divider,
+  RadioGroup,
+  Radio,
+  RadioIndicator,
+  RadioIcon,
+  RadioLabel,
+  CircleIcon,
+  HStack,
 } from '@gluestack-ui/themed';
-import {useRealm} from '../realm/realmProvider';
+import withTodos from '../components/HOC/withTodos';
 
-const CreateTodoForm = () => {
+const CreateTodoForm = (props: any) => {
   const [showForm, setShowForm] = useState(false);
   const [field, setField] = useState('');
-  const realm = useRealm();
+
+  const {addTodo} = props;
+
   const updateField = (
     event: NativeSyntheticEvent<TextInputChangeEventData>,
   ): void => {
     setField(event.nativeEvent.text);
   };
-  const addTodo = (description: string) => {
-    realm.write(() => {
-      realm.create('Todo', {
-        _id: new Realm.BSON.ObjectId(),
-        description: description,
-        done: false,
-      });
-    });
+  const handleAddTodo = (description: string) => {
+    addTodo(description);
     setShowForm(false);
   };
 
@@ -41,23 +46,50 @@ const CreateTodoForm = () => {
       <Actionsheet
         isOpen={showForm}
         onClose={() => setShowForm(!showForm)}
-        snapPoints={[30]}>
+        snapPoints={[40]}>
         <ActionsheetBackdrop />
         <ActionsheetContent>
           <VStack space="md" width="90%">
             <Heading>Create A New Todo</Heading>
-            <Input
-              size="md"
-              variant="outline"
-              isDisabled={false}
-              isInvalid={false}
-              isReadOnly={false}>
-              <InputField
-                placeholder="Enter what you want to do..."
-                onChange={e => updateField(e)}
-              />
-            </Input>
-            <Button onPress={() => addTodo(field)}>
+            <>
+              <Text>Description</Text>
+              <Input
+                size="md"
+                variant="outline"
+                isDisabled={false}
+                isInvalid={false}
+                isReadOnly={false}>
+                <InputField
+                  placeholder="Enter what you want to do..."
+                  onChange={e => updateField(e)}
+                />
+              </Input>
+            </>
+            <Divider />
+            <Text>Recurring</Text>
+            <RadioGroup>
+              <HStack space="sm">
+                <Radio value="everyday">
+                  <RadioIndicator mr="$2">
+                    <RadioIcon as={CircleIcon} />
+                  </RadioIndicator>
+                  <RadioLabel>Everyday</RadioLabel>
+                </Radio>
+                <Radio value="onceaweek">
+                  <RadioIndicator mr="$2">
+                    <RadioIcon as={CircleIcon} />
+                  </RadioIndicator>
+                  <RadioLabel>Once a week</RadioLabel>
+                </Radio>
+                <Radio value="custom">
+                  <RadioIndicator mr="$2">
+                    <RadioIcon as={CircleIcon} />
+                  </RadioIndicator>
+                  <RadioLabel>Custom</RadioLabel>
+                </Radio>
+              </HStack>
+            </RadioGroup>
+            <Button onPress={() => handleAddTodo(field)}>
               <ButtonText>Submit</ButtonText>
             </Button>
           </VStack>
@@ -67,4 +99,4 @@ const CreateTodoForm = () => {
   );
 };
 
-export default CreateTodoForm;
+export default withTodos(CreateTodoForm);

@@ -1,5 +1,4 @@
 import React, {useState} from 'react';
-import _ from 'lodash';
 import {NativeSyntheticEvent, TextInputChangeEventData} from 'react-native';
 import {
   Text,
@@ -17,26 +16,20 @@ import {
   InputField,
   ButtonText,
 } from '@gluestack-ui/themed';
-import {useRealm, useQuery} from '../realm/realmProvider';
 import Todo from '../realm/todo';
+import withTodos from './HOC/withTodos';
 
-const TodoList = () => {
-  const realm = useRealm();
-  const todos = useQuery(Todo);
+const TodoList = (props: any) => {
+  const {todos, deleteTodo, updateTodoDescription} = props;
   const [showForm, setShowForm] = useState(false);
   const [activeTodo, setActiveTodo] = useState({});
   const [field, setField] = useState('');
-  const deleteTodo = (todo: Todo) => {
-    realm.write(() => {
-      realm.delete(todo);
-    });
-  };
-  const updateTodo = () => {
-    realm.write(() => {
-      _.set(activeTodo, 'description', field);
-    });
+
+  const handleUpdateTodo = () => {
+    updateTodoDescription(activeTodo, field);
     setShowForm(false);
   };
+
   const updateField = (
     event: NativeSyntheticEvent<TextInputChangeEventData>,
   ): void => {
@@ -53,7 +46,7 @@ const TodoList = () => {
   return (
     <Center>
       <VStack space="xl">
-        {todos.map((t, i) => (
+        {todos.map((t: Todo, i: number) => (
           <Text key={i}>
             {`${t.description} `}
             <Button size="xs" onPress={() => openEditTodo(t)}>
@@ -78,7 +71,7 @@ const TodoList = () => {
               isReadOnly={false}>
               <InputField value={field} onChange={e => updateField(e)} />
             </Input>
-            <Button onPress={updateTodo}>
+            <Button onPress={handleUpdateTodo}>
               <ButtonText>Submit</ButtonText>
             </Button>
           </VStack>
@@ -88,4 +81,4 @@ const TodoList = () => {
   );
 };
 
-export default TodoList;
+export default withTodos(TodoList);
