@@ -1,13 +1,15 @@
-import React from 'react';
+import React, {Suspense, lazy} from 'react';
 import {
   config,
   GluestackUIProvider,
   Center,
   VStack,
+  Text,
 } from '@gluestack-ui/themed';
 import {RealmProvider} from './realm/realmProvider';
-import TodoList from './components/TodoList';
-import CreateTodoForm from './pages/CreateTodoForm';
+
+const TodoList = lazy(() => import('./components/TodoList'));
+const CreateTodoForm = lazy(() => import('./pages/CreateTodoForm'));
 
 export default function App() {
   return (
@@ -15,8 +17,10 @@ export default function App() {
       <GluestackUIProvider config={config.theme}>
         <Center h={'100%'}>
           <VStack space="lg">
-            <CreateTodoForm />
-            <TodoList />
+            <Suspense fallback={<Text>Loading...</Text>}>
+              <CreateTodoForm />
+              <TodoList />
+            </Suspense>
           </VStack>
         </Center>
       </GluestackUIProvider>
