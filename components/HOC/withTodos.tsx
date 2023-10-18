@@ -24,6 +24,12 @@ const withTodos = (WrappedComponent: React.FC) => {
       });
     };
 
+    const updateTodoDone = (todo: Todo, bool: boolean) => {
+      realm.write(() => {
+        _.set(todo, 'done', !bool);
+      });
+    };
+
     const deleteTodo = (todo: Todo) => {
       realm.write(() => {
         realm.delete(todo);
@@ -34,6 +40,7 @@ const withTodos = (WrappedComponent: React.FC) => {
       <WrappedComponent
         todos={todos}
         addTodo={addTodo}
+        updateTodoDone={updateTodoDone}
         updateTodoDescription={updateTodoDescription}
         deleteTodo={deleteTodo}
         {...props}

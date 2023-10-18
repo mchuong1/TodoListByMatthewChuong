@@ -15,12 +15,17 @@ import {
   Input,
   InputField,
   ButtonText,
+  Checkbox,
+  CheckboxIcon,
+  CheckIcon,
+  CheckboxIndicator,
+  CheckboxLabel,
 } from '@gluestack-ui/themed';
 import Todo from '../realm/todo';
 import withTodos from './HOC/withTodos';
 
 const TodoList = (props: any) => {
-  const {todos, deleteTodo, updateTodoDescription} = props;
+  const {todos, deleteTodo, updateTodoDescription, updateTodoDone} = props;
   const [showForm, setShowForm] = useState(false);
   const [activeTodo, setActiveTodo] = useState({});
   const [field, setField] = useState('');
@@ -43,12 +48,22 @@ const TodoList = (props: any) => {
   const handleClose = () => {
     setShowForm(!showForm);
   };
+
   return (
     <Center>
       <VStack space="xl">
         {todos.map((t: Todo, i: number) => (
           <Text key={i}>
-            {`${t.description} `}
+            <Checkbox
+              accessibilityLabel="checkbox"
+              value={t.description}
+              isChecked={t.done}
+              onChange={() => updateTodoDone(t, t.done)}>
+              <CheckboxIndicator mr="$2">
+                <CheckboxIcon as={CheckIcon} />
+              </CheckboxIndicator>
+              <CheckboxLabel>{`${t.description} `}</CheckboxLabel>
+            </Checkbox>
             <Button size="xs" onPress={() => openEditTodo(t)}>
               <ButtonIcon as={EditIcon} />
             </Button>
@@ -62,7 +77,7 @@ const TodoList = (props: any) => {
         <ActionsheetBackdrop />
         <ActionsheetContent>
           <VStack space="md" width="90%">
-            <Heading>Updating Todo</Heading>
+            <Heading>Update Todo</Heading>
             <Input
               size="md"
               variant="outline"

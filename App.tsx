@@ -5,11 +5,13 @@ import {
   Center,
   VStack,
   Text,
+  Heading,
 } from '@gluestack-ui/themed';
 import {RealmProvider} from './realm/realmProvider';
 
 const TodoList = lazy(() => import('./components/TodoList'));
 const CreateTodoForm = lazy(() => import('./pages/CreateTodoForm'));
+const TodoProgress = lazy(() => import('./components/TodoProgress'));
 
 export default function App() {
   return (
@@ -18,8 +20,10 @@ export default function App() {
         <Center h={'100%'}>
           <VStack space="lg">
             <Suspense fallback={<Text>Loading...</Text>}>
-              <CreateTodoForm />
+              <Heading>Todo List</Heading>
+              <TodoProgress />
               <TodoList />
+              <CreateTodoForm />
             </Suspense>
           </VStack>
         </Center>
