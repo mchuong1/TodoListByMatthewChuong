@@ -41,7 +41,7 @@ const CreateTodoForm = (props: any) => {
   return (
     <>
       <Button onPress={() => setShowForm(true)}>
-        <ButtonText>Create Todo*</ButtonText>
+        <ButtonText>Create Todo</ButtonText>
       </Button>
       <Actionsheet
         isOpen={showForm}
@@ -69,23 +69,23 @@ const CreateTodoForm = (props: any) => {
             <Text>Recurring</Text>
             <RadioGroup>
               <HStack space="sm">
-                <Radio value="everyday">
+                <Radio value="day">
                   <RadioIndicator mr="$2">
                     <RadioIcon as={CircleIcon} />
                   </RadioIndicator>
                   <RadioLabel>Everyday</RadioLabel>
                 </Radio>
-                <Radio value="onceaweek">
+                <Radio value="week">
                   <RadioIndicator mr="$2">
                     <RadioIcon as={CircleIcon} />
                   </RadioIndicator>
                   <RadioLabel>Once a week</RadioLabel>
                 </Radio>
-                <Radio value="custom">
+                <Radio value="month">
                   <RadioIndicator mr="$2">
                     <RadioIcon as={CircleIcon} />
                   </RadioIndicator>
-                  <RadioLabel>Custom</RadioLabel>
+                  <RadioLabel>Once a Month</RadioLabel>
                 </Radio>
               </HStack>
             </RadioGroup>
