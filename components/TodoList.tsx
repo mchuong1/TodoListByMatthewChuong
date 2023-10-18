@@ -1,10 +1,8 @@
 import React, {useState} from 'react';
 import {NativeSyntheticEvent, TextInputChangeEventData} from 'react-native';
 import {
-  Text,
   Center,
   Button,
-  ButtonIcon,
   TrashIcon,
   VStack,
   EditIcon,
