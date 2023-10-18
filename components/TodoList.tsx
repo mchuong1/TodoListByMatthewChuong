@@ -20,6 +20,13 @@ import {
   CheckIcon,
   CheckboxIndicator,
   CheckboxLabel,
+  Icon,
+  ThreeDotsIcon,
+  HStack,
+  Pressable,
+  Menu,
+  MenuItem,
+  MenuItemLabel,
 } from '@gluestack-ui/themed';
 import Todo from '../realm/todo';
 import withTodos from './HOC/withTodos';
@@ -53,7 +60,7 @@ const TodoList = (props: any) => {
     <Center>
       <VStack space="xl">
         {todos.map((t: Todo, i: number) => (
-          <Text key={i}>
+          <HStack key={i} justifyContent="space-between">
             <Checkbox
               accessibilityLabel="checkbox"
               value={t.description}
@@ -64,13 +71,26 @@ const TodoList = (props: any) => {
               </CheckboxIndicator>
               <CheckboxLabel>{`${t.description} `}</CheckboxLabel>
             </Checkbox>
-            <Button size="xs" onPress={() => openEditTodo(t)}>
-              <ButtonIcon as={EditIcon} />
-            </Button>
-            <Button size="xs" onPress={() => deleteTodo(t)}>
-              <ButtonIcon as={TrashIcon} />
-            </Button>
-          </Text>
+            <Menu
+              placement="top"
+              // style={{backgroundColor: 'gray'}}
+              trigger={triggerProps => {
+                return (
+                  <Pressable {...triggerProps}>
+                    <Icon as={ThreeDotsIcon} />
+                  </Pressable>
+                );
+              }}>
+              <MenuItem onPress={() => openEditTodo(t)}>
+                <Icon as={EditIcon} mr="$2" />
+                <MenuItemLabel>Edit</MenuItemLabel>
+              </MenuItem>
+              <MenuItem onPress={() => deleteTodo(t)}>
+                <Icon as={TrashIcon} mr="$2" />
+                <MenuItemLabel>Delete</MenuItemLabel>
+              </MenuItem>
+            </Menu>
+          </HStack>
         ))}
       </VStack>
       <Actionsheet isOpen={showForm} onClose={handleClose} snapPoints={[30]}>
