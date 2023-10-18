@@ -14,7 +14,7 @@ const TodoProgress = (props: any) => {
   totalDone();
 
   return (
-    <Progress size="md" value={totalDone()}>
+    <Progress size="md" value={totalDone()} width="auto">
       <ProgressFilledTrack />
     </Progress>
   );
