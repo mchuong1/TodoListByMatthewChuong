@@ -36,6 +36,14 @@ const withTodos = (WrappedComponent: React.FC) => {
       });
     };
 
+    const resetTodos = () => {
+      todos.forEach(todo => {
+        realm.write(() => {
+          _.set(todo, 'done', false);
+        });
+      });
+    };
+
     return (
       <WrappedComponent
         todos={todos}
@@ -43,6 +51,7 @@ const withTodos = (WrappedComponent: React.FC) => {
         updateTodoDone={updateTodoDone}
         updateTodoDescription={updateTodoDescription}
         deleteTodo={deleteTodo}
+        resetTodos={resetTodos}
         {...props}
       />
     );

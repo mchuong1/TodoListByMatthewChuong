@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import {NativeSyntheticEvent, TextInputChangeEventData} from 'react-native';
 import {
   Center,
@@ -28,12 +28,47 @@ import {
 } from '@gluestack-ui/themed';
 import Todo from '../realm/todo';
 import withTodos from './HOC/withTodos';
+import moment from 'moment';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const TodoList = (props: any) => {
-  const {todos, deleteTodo, updateTodoDescription, updateTodoDone} = props;
+  const {todos, deleteTodo, updateTodoDescription, updateTodoDone, resetTodos} =
+    props;
   const [showForm, setShowForm] = useState(false);
   const [activeTodo, setActiveTodo] = useState({});
   const [field, setField] = useState('');
+
+  // Function to check if the day has changed
+  const hasDayChanged = async () => {
+    const storedDate = await AsyncStorage.getItem('lastResetDate');
+
+    if (!storedDate) {
+      return true;
+    } else {
+      const isNewDay = moment(storedDate).isBefore(
+        moment().format('mm-dd-yyyy'),
+        'day',
+      );
+
+      return isNewDay;
+    }
+  };
+
+  const resetToDoListForNewDay = async () => {
+    if (await hasDayChanged()) {
+      // Clear the existing to-do list
+      await AsyncStorage.removeItem('lastResetDate');
+
+      // Update the stored date to the current date
+      await AsyncStorage.setItem(
+        'lastResetDate',
+        moment().format('mm-dd-yyy').toString(),
+      );
+      // Optionally, reset your state with an empty to-do list
+      // TODO: reset todo list done statuses to false
+      resetTodos();
+    }
+  };
 
   const handleUpdateTodo = () => {
     updateTodoDescription(activeTodo, field);
@@ -53,6 +88,10 @@ const TodoList = (props: any) => {
   const handleClose = () => {
     setShowForm(!showForm);
   };
+
+  useEffect(() => {
+    resetToDoListForNewDay();
+  });
 
   return (
     <Center>

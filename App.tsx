@@ -9,12 +9,13 @@ import {
 } from '@gluestack-ui/themed';
 import {RealmProvider} from './realm/realmProvider';
 import PushNotificationIOS from '@react-native-community/push-notification-ios';
+import moment from 'moment';
 
 const TodoList = lazy(() => import('./components/TodoList'));
 const CreateTodoForm = lazy(() => import('./pages/CreateTodoForm'));
 const TodoProgress = lazy(() => import('./components/TodoProgress'));
 
-export default function App() {
+function App() {
   const getCorrectDate = () => {
     const date = new Date();
     date.setDate(date.getDate());
@@ -43,7 +44,7 @@ export default function App() {
         <Center h={'100%'}>
           <VStack space="lg">
             <Suspense fallback={<Text>Loading...</Text>}>
-              <Heading>Todo List</Heading>
+              <Heading>{moment().format('dddd')}</Heading>
               <TodoProgress />
               <TodoList />
               <CreateTodoForm />
@@ -54,3 +55,5 @@ export default function App() {
     </RealmProvider>
   );
 }
+
+export default App;
