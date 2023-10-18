@@ -487,6 +487,8 @@ PODS:
     - React-perflogger (= 0.72.5)
   - RealmJS (12.2.0):
     - React
+  - RNCPushNotificationIOS (1.11.0):
+    - React-Core
   - RNSVG (13.14.0):
     - React-Core
   - SocketRocket (0.6.1)
@@ -558,6 +560,7 @@ DEPENDENCIES:
   - React-utils (from `../node_modules/react-native/ReactCommon/react/utils`)
   - ReactCommon/turbomodule/core (from `../node_modules/react-native/ReactCommon`)
   - RealmJS (from `../node_modules/realm`)
+  - "RNCPushNotificationIOS (from `../node_modules/@react-native-community/push-notification-ios`)"
   - RNSVG (from `../node_modules/react-native-svg`)
   - Yoga (from `../node_modules/react-native/ReactCommon/yoga`)
 
@@ -658,6 +661,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native/ReactCommon"
   RealmJS:
     :path: "../node_modules/realm"
+  RNCPushNotificationIOS:
+    :path: "../node_modules/@react-native-community/push-notification-ios"
   RNSVG:
     :path: "../node_modules/react-native-svg"
   Yoga:
@@ -715,6 +720,7 @@ SPEC CHECKSUMS:
   React-utils: 7a9918a1ffdd39aba67835d42386f592ea3f8e76
   ReactCommon: 91ece8350ebb3dd2be9cef662abd78b6948233c0
   RealmJS: a480cb21d4b0ba82c843c77c3a211770411eec75
+  RNCPushNotificationIOS: 64218f3c776c03d7408284a819b2abfda1834bc8
   RNSVG: d00c8f91c3cbf6d476451313a18f04d220d4f396
   SocketRocket: f32cd54efbe0f095c4d7594881e52619cfe80b17
   Yoga: 86fed2e4d425ee4c6eab3813ba1791101ee153c6
