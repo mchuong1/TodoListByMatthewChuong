@@ -41,15 +41,16 @@ const TodoList = (props: any) => {
   // Function to check if the day has changed
   const hasDayChanged = async () => {
     const storedDate = await AsyncStorage.getItem('lastResetDate');
-
+    console.log(storedDate, 'storedDate');
     if (!storedDate) {
       return true;
     } else {
+      console.log(moment().format('MM-DD-YYYY'), 'today');
       const isNewDay = moment(storedDate).isBefore(
-        moment().format('mm-dd-yyyy'),
+        moment().format('MM-DD-YYYY'),
         'day',
       );
-
+      console.log(isNewDay, 'isNewDay');
       return isNewDay;
     }
   };
@@ -62,7 +63,7 @@ const TodoList = (props: any) => {
       // Update the stored date to the current date
       await AsyncStorage.setItem(
         'lastResetDate',
-        moment().format('mm-dd-yyy').toString(),
+        moment().format('MM-DD-YYYY').toString(),
       );
       // Optionally, reset your state with an empty to-do list
       // TODO: reset todo list done statuses to false
